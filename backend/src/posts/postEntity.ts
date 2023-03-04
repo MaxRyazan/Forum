@@ -15,7 +15,7 @@ export class PostEntity {
     @Column({nullable: false})
     tags: string
 
-    @Column({nullable: false})
+    @Column({nullable: false, type: "text"})
     subject: string
 
     @CreateDateColumn()

@@ -1,20 +1,15 @@
 <template>
-    <div class="all_posts_wrapper">
+    <div class="all_posts_wrapper" v-for="post in store.state.allPosts" :key="post.id">
         <div class="all_posts_wrapper_item">
-            adasd
-        </div>
-        <div class="all_posts_wrapper_item">
-            adasd
-        </div>
-        <div class="all_posts_wrapper_item">
-            adasd
+            <div class="all_posts_wrapper_item-content">{{post.title}}</div>
+            <div class="all_posts_wrapper_item-content">{{post.tags}}</div>
+            <div class="all_posts_wrapper_item-content">{{post.subject}}</div>
         </div>
     </div>
 </template>
 
 <script setup>
-
-</script>
+import store from "@/store/store";</script>
 
 <style scoped>
 .all_posts_wrapper{
@@ -25,6 +20,11 @@
     gap: 10px;
 }
 .all_posts_wrapper_item{
-    border: 2px solid blue;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.all_posts_wrapper_item-content{
+    margin-top: 10px;
 }
 </style>

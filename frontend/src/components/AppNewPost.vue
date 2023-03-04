@@ -1,15 +1,29 @@
 <template>
     <div class="new_post_wrapper">
         <h1>Добавить новый пост</h1>
-        <input v-model="store.state.title" type="text" class="new_post_input_title" placeholder="Придумайте название для поста" autofocus>
-        <input v-model="store.state.tags" type="text" class="new_post_input_tags" placeholder="Укажите теги для поиска">
-        <textarea v-model="store.state.subject" class="new_post_input_subject" placeholder="Напишите содержание поста"></textarea>
-        <button>Добавить</button>
+        <input v-model="state.title" type="text" class="new_post_input_title" placeholder="Придумайте название для поста" autofocus>
+        <input v-model="state.tags" type="text" class="new_post_input_tags" placeholder="Укажите теги для поиска">
+        <textarea v-model="state.subject" class="new_post_input_subject" placeholder="Напишите содержание поста"></textarea>
+        <button @click.prevent="addNewPost">Добавить</button>
     </div>
 </template>
 
 <script setup>
 import store from "@/store/store";
+import {Actions} from "@/logic/actions";
+
+const state = store.state
+
+function addNewPost() {
+    if (validateFields()) {
+        const actions = new Actions()
+        actions.sendNewPostData()
+    }
+}
+
+function validateFields() {
+    return state.tags.length > 2 && state.title.length > 5 && state.subject.length > 25
+}
 </script>
 
 <style scoped lang="scss">

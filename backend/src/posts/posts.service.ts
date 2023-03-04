@@ -21,4 +21,8 @@ export class PostsService {
     async showAllPosts(): Promise<PostEntity[]> {
         return await this.postsRepository.find()
     }
+
+    async findByTitle(title){
+        return await this.postsRepository.findOne({where:{title}})
+    }
 }
