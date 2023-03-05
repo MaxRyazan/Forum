@@ -30,4 +30,6 @@ export class PostEntity {
     @Column({default: 0})
     likes: number
 
+    @Column({type: "json"})
+    usersWhoLiked: string[]
 }

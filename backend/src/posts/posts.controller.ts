@@ -26,7 +26,6 @@ export class PostsController {
 
     @Patch()
     async updatePost(@Body()postEntity: PostEntity): Promise<PostEntity>{
-        console.log(postEntity)
         return await this.postsService.updatePost(postEntity);
     }
 

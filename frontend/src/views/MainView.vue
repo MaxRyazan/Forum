@@ -13,18 +13,14 @@ import AppNewPost from '../components/AppNewPost.vue'
 import store from "@/store/store";
 import {onMounted} from "vue";
 import {Actions} from "@/logic/actions";
+import {Mutations} from "@/logic/mutations";
 
 onMounted(async () => {
     const actions = new Actions();
+    const mutations = new Mutations()
     await actions.getAllPosts()
 
-    if(localStorage.getItem('user') === null){
-        const defaultUser = {
-            username: 'user'+ Date.now(),
-            id: Date.now()
-        }
-    localStorage.setItem('user', JSON.stringify(defaultUser))
-    }
+    mutations.checkUserInLocalStorage()
 })
 
 function toggleVision(){

@@ -1,3 +1,3 @@
 export class UserEntity{
-    constructor(public username: string, public isLiked: boolean, isViewed: boolean, public email?: string) {}
+    constructor(public id: number, public username: string, public email?: string) {}
 }

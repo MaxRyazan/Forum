@@ -1,27 +1,30 @@
 <template>
-    <div class="one_post_nav">
-        <a href="/">Главная</a>
-        <span>/ Пост № {{store.state.onePost.id}}</span>
-    </div>
-    <div class="one_post_wrapper">
-        <div>{{store.state.onePost.title}}</div>
-        <div>{{store.state.onePost.tags}}</div>
-        <div>{{store.state.onePost.subject}}</div>
-    </div>
-    <div class="one_post_footer">
-        <div class="one_post_like">
-            <div class="one_post_like_text">
-                <h4>Понравилась статья?</h4>
+    <div class="one_post_container">
+        <div class="one_post_nav">
+            <a href="/">Главная</a>
+            <span>/ Пост № {{store.state.onePost.id}}</span>
+        </div>
+        <div class="one_post_wrapper">
+            <div>{{store.state.onePost.title}}</div>
+            <div>{{store.state.onePost.tags}}</div>
+            <div>{{store.state.onePost.subject}}</div>
+        </div>
+        <div class="one_post_footer">
+            <div class="one_post_like">
+                <div class="one_post_like_text">
+                    <h4>Понравилась статья?</h4>
+                </div>
+                <div class="one_post_like_img">
+                    <img @click="signLike(store.state.onePost)" class="one_post_like_img_item" src="@/assets/images/like_picture.png" alt="like">
+                    <span>{{likes}}</span>
+                </div>
             </div>
-            <div class="one_post_like_img">
-                <img @click="signLike(store.state.onePost)" class="one_post_like_img_item" src="@/assets/images/like_picture.png" alt="like">
-                <span>{{likes}}</span>
+            <div class="one_post_views">
+                <h4>Просмотров: {{store.state.onePost.views}}</h4>
             </div>
         </div>
-        <div class="one_post_views">
-            <h4>Просмотров: {{store.state.onePost.views}}</h4>
-        </div>
     </div>
+
 </template>
 
 <script setup>
@@ -48,15 +51,37 @@ async function signLike(postEntity){
 </script>
 
 <style scoped lang="scss">
+template{
+}
+.one_post_container{
+  border: 1px solid rgb(21, 145, 153);
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 100vh;
+}
 .one_post_wrapper {
   display: flex;
   flex-direction: column;
   text-align: center;
   gap: 50px;
   padding: 20px;
+  background-color: white;
 }
-
+.one_post_nav{
+  margin-top: 150px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
+  & a{
+    color: rgb(35, 142, 166);
+    text-decoration: none;
+  }
+}
 .one_post_footer{
+  border-radius: 0 0 20px 20px;
+  background-color: white;
+  padding-top: 30px;
+  padding-bottom: 30px;
   display: flex;
   justify-content: space-around;
   & h4 {

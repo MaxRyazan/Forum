@@ -13,5 +13,5 @@ export default createStore({
         isFormVisible: ref(false)
     },
     actions: Actions,
-    mutations:Mutations
+    mutations: Mutations
 })

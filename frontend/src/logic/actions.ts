@@ -43,15 +43,18 @@ export class Actions {
     }
 
     async signLike(postEntity: PostEntity){
-        // @ts-ignore
-        const user = JSON.parse(localStorage.getItem('user'))
-        if(postEntity.users.indexOf(user.id) === -1){
+        const mutations = new Mutations()
+        const user = mutations.checkUserInLocalStorage()
+        if(postEntity.usersWhoLiked === null || postEntity.usersWhoLiked.indexOf(String(user.id)) === -1) {
+            postEntity.usersWhoLiked = []
+            postEntity.usersWhoLiked.push(String(user.id))
             postEntity.likes = postEntity.likes + 1
+        } else {
+            if(postEntity.usersWhoLiked !== null && postEntity.usersWhoLiked.indexOf(String(user.id)) !== -1) {
+                postEntity.usersWhoLiked.splice(0, 1)
+                postEntity.likes = postEntity.likes - 1
+            }
         }
-        if(postEntity.users.indexOf(user.id) !== -1){
-            postEntity.likes = postEntity.likes - 1
-        }
-
         await fetch(baseURL + `/posts`, {
             method: "PATCH",
             headers: {
