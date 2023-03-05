@@ -14,7 +14,7 @@
                 <h4>Понравилась статья?</h4>
             </div>
             <div class="one_post_like_img">
-                <img @click="store.state.onePost.likes++" class="one_post_like_img_item" src="@/assets/images/like_picture.png" alt="like">
+                <img @click="signLike(store.state.onePost)" class="one_post_like_img_item" src="@/assets/images/like_picture.png" alt="like">
                 <span>{{likes}}</span>
             </div>
         </div>
@@ -30,9 +30,10 @@ import {Actions} from "@/logic/actions";
 import {computed, onMounted} from "vue";
 import store from "@/store/store";
 
+const actions = new Actions();
+
 onMounted(async () => {
     const route = useRoute();
-    const actions = new Actions();
     await actions.getOnePost(String(route.params.id))
     await actions.refreshViews(store.state.onePost)
 })
@@ -41,6 +42,9 @@ const likes = computed(() => {
     return store.state.onePost.likes > 0 ? store.state.onePost.likes : ''
 })
 
+async function signLike(postEntity){
+    await actions.signLike(postEntity)
+}
 </script>
 
 <style scoped lang="scss">
@@ -87,8 +91,8 @@ const likes = computed(() => {
   & span{
     width: 30px;
     position: absolute;
-    bottom: -15px;
-    left: 20px;
+    bottom: 5px;
+    right: -60px;
     text-align: center;
     cursor: default;
   }

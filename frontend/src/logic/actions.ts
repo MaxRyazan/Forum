@@ -3,7 +3,7 @@ import store from "@/store/store.js";
 import {Mutations} from "@/logic/mutations";
 import {baseURL} from '@/env'
 // @ts-ignore
-import {PostEntity} from "@/logic/PostEntity";
+import {PostEntity} from "@/logic/entities/PostEntity";
 
 
 export class Actions {
@@ -39,6 +39,25 @@ export class Actions {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(post)
+        })
+    }
+
+    async signLike(postEntity: PostEntity){
+        // @ts-ignore
+        const user = JSON.parse(localStorage.getItem('user'))
+        if(postEntity.users.indexOf(user.id) === -1){
+            postEntity.likes = postEntity.likes + 1
+        }
+        if(postEntity.users.indexOf(user.id) !== -1){
+            postEntity.likes = postEntity.likes - 1
+        }
+
+        await fetch(baseURL + `/posts`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postEntity)
         })
     }
 }

@@ -5,13 +5,15 @@ export class PostEntity {
     public subject: string;
     public views: number;
     public likes: number;
+    public users: number[]
 
-    constructor(id: number, title: string, tags: string, subject: string, views: number, likes: number) {
+    constructor(id: number, title: string, tags: string, subject: string, views: number, likes: number, users: number[]) {
         this.id = id;
         this.title = title
         this.tags = tags;
         this.subject = subject;
         this.views = views;
         this.likes = likes;
+        this.users = users
     }
 }

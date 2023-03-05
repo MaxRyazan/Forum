@@ -27,7 +27,6 @@ export class PostsService {
     }
 
     async updatePost(postEntity: PostEntity) {
-        console.log(postEntity)
         return await this.postsRepository.save(postEntity)
     }
 }

@@ -37,6 +37,8 @@ function validateFields() {
       font-size: 20px;
     }
   & input{
+    padding: 0 10px;
+    border-radius: 4px;
     height: 28px;
     font-size: 16px;
     border: none;
@@ -44,8 +46,9 @@ function validateFields() {
     border-bottom: 1px solid gray;
   }
   & textarea {
+    border-radius: 4px;
     font-size: 15px;
-    padding: 5px;
+    padding: 5px 10px;
     height: 250px;
     border-right: none;
     border-left: none;

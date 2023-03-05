@@ -17,6 +17,14 @@ import {Actions} from "@/logic/actions";
 onMounted(async () => {
     const actions = new Actions();
     await actions.getAllPosts()
+
+    if(localStorage.getItem('user') === null){
+        const defaultUser = {
+            username: 'user'+ Date.now(),
+            id: Date.now()
+        }
+    localStorage.setItem('user', JSON.stringify(defaultUser))
+    }
 })
 
 function toggleVision(){
