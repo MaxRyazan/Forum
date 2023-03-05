@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post} from '@nestjs/common';
 import {PostsService} from "./posts.service";
 import {PostEntity} from "./postEntity";
 
@@ -22,6 +22,12 @@ export class PostsController {
     @Get('/:id')
     async showPost(@Param('id') id: string): Promise<PostEntity>{
         return await this.postsService.showOnePost(Number(id));
+    }
+
+    @Patch()
+    async updatePost(@Body()postEntity: PostEntity): Promise<PostEntity>{
+        console.log(postEntity)
+        return await this.postsService.updatePost(postEntity);
     }
 
     @Get()

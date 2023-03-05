@@ -25,4 +25,9 @@ export class PostsService {
     async findByTitle(title){
         return await this.postsRepository.findOne({where:{title}})
     }
+
+    async updatePost(postEntity: PostEntity) {
+        console.log(postEntity)
+        return await this.postsRepository.save(postEntity)
+    }
 }

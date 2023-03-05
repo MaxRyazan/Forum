@@ -1,8 +1,10 @@
 // @ts-ignore
 import store from "@/store/store.js";
 import {Mutations} from "@/logic/mutations";
-// @ts-ignore
 import {baseURL} from '@/env'
+// @ts-ignore
+import {PostEntity} from "@/logic/PostEntity";
+
 
 export class Actions {
     async sendNewPostData(){
@@ -27,5 +29,16 @@ export class Actions {
     async getOnePost(id: string) {
         const post = await fetch(baseURL + `/posts/${id}`)
         store.state.onePost =  await post.json()
+    }
+
+    async refreshViews(post: PostEntity) {
+        post.views = post.views + 1
+        await fetch(baseURL + `/posts`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(post)
+        })
     }
 }

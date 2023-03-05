@@ -25,6 +25,7 @@ function toggleVision(){
 </script>
 
 <style scoped>
+
 .main_view_wrapper{
     max-width: 1440px;
     margin: 0 auto;

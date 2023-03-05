@@ -10,6 +10,7 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "sass": "^1.58.3",
     "sass-loader": "^13.2.0",
     "vue": "^3.2.45",

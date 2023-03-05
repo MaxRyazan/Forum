@@ -27,4 +27,7 @@ export class PostEntity {
     @Column({default: 0})
     views: number
 
+    @Column({default: 0})
+    likes: number
+
 }
