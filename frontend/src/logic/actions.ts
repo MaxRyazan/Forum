@@ -23,4 +23,9 @@ export class Actions {
         const posts = await fetch(baseURL + '/posts')
         store.state.allPosts = await posts.json()
     }
+
+    async getOnePost(id: string) {
+        const post = await fetch(baseURL + `/posts/${id}`)
+        store.state.onePost =  await post.json()
+    }
 }

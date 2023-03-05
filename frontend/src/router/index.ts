@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import MainView from '../views/MainView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
@@ -10,9 +10,9 @@ const router = createRouter({
       component: MainView
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/MainView.vue')
+      path: '/posts/:id',
+      name: 'postIdView',
+      component: () => import('@/components/PostIdView.vue')
     }
   ]
 })

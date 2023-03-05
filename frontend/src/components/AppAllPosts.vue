@@ -1,6 +1,6 @@
 <template>
     <div class="all_posts_wrapper">
-        <div class="all_posts_wrapper_item" v-for="post in store.state.allPosts" :key="post.id">
+        <div class="all_posts_wrapper_item" v-for="post in store.state.allPosts" :key="post.id" @click="$router.push(`/posts/${post.id}`)">
             <div class="all_posts_wrapper_item-content">{{post.title}}</div>
             <div class="all_posts_wrapper_item-content">{{post.tags}}</div>
             <div class="all_posts_wrapper_item-content">{{post.subject}}</div>
@@ -10,7 +10,6 @@
 
 <script setup>
 import store from "@/store/store";</script>
-
 <style scoped lang="scss">
 .all_posts_wrapper {
   margin-top: 50px;

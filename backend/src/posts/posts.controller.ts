@@ -26,7 +26,6 @@ export class PostsController {
 
     @Get()
     async showAllPosts(): Promise<PostEntity[]>{
-        console.log(await this.postsService.showAllPosts())
         return await this.postsService.showAllPosts();
     }
 }

@@ -30,7 +30,15 @@ function toggleVision(){
     margin: 0 auto;
     padding: 10px;
 }
+.form_new_post{
+    animation: 1s linear beauty;
+}
 .form_new_post_hide{
-    display: none;
+    opacity: 0;
+}
+
+@keyframes beauty {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
 </style>

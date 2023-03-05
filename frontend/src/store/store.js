@@ -6,6 +6,7 @@ import {Mutations} from "@/logic/mutations";
 export default createStore({
     state:{
         allPosts: reactive([]),
+        onePost: reactive({}),
         title: ref(''),
         tags: ref(''),
         subject: ref(''),
