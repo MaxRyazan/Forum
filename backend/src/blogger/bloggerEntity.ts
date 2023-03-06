@@ -1,6 +1,7 @@
 import {BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {hash} from 'bcrypt'
 import {PostEntity} from "../posts/postEntity";
+import {CommentEntity} from "../comments/CommentEntity";
 
 @Entity({name: 'bloggers'})
 export class BloggerEntity {
@@ -22,6 +23,9 @@ export class BloggerEntity {
 
     @OneToMany(() => PostEntity, post => post.author, {cascade: true})
     posts: PostEntity[]
+
+    @OneToMany(() => CommentEntity, comment => comment.author)
+    comments: CommentEntity[]
 
     @BeforeInsert()
     async hashPass(){

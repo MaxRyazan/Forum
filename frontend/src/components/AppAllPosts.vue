@@ -63,7 +63,6 @@ import store from "@/store/store";</script>
   }
 }
 .all_posts_wrapper_item {
-  background-color: rgb(11, 65, 68);
   display: flex;
   flex-direction: column;
   text-align: center;

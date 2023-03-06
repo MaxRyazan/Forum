@@ -1,5 +1,14 @@
 import {BloggerEntity} from "../blogger/bloggerEntity";
-import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
+import {CommentEntity} from "../comments/CommentEntity";
 
 @Entity({name: 'posts'})
 export class PostEntity {
@@ -32,4 +41,7 @@ export class PostEntity {
 
     @Column({type: "json"})
     usersWhoLiked: string[]
+
+    @OneToMany(() => CommentEntity, comment => comment.belongTo, {cascade: true})
+    comments: CommentEntity[]
 }

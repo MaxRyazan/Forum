@@ -6,6 +6,8 @@ import {BloggerEntity} from "./blogger/bloggerEntity";
 import {PostEntity} from "./posts/postEntity";
 import {BloggerModule} from './blogger/blogger.module';
 import {PostsModule} from "./posts/posts.module";
+import {CommentsModule} from './comments/comments.module';
+import {CommentEntity} from "./comments/CommentEntity";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,9 +17,9 @@ import {PostsModule} from "./posts/posts.module";
     username: 'root',
     password: 'bestuser',
     database: 'blog_nestjs',
-    entities: [BloggerEntity, PostEntity],
+    entities: [BloggerEntity, PostEntity, CommentEntity],
     synchronize: true,
-  }), BloggerModule, PostsModule],
+  }), BloggerModule, PostsModule, CommentsModule],
   controllers: [AppController],
   providers: [AppService],
 })
