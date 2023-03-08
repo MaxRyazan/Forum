@@ -63,4 +63,9 @@ export class Actions {
             body: JSON.stringify(postEntity)
         })
     }
+
+    async getCommentsToOnePost(id: number) {
+       const commentsData =  await fetch(baseURL + `/comments/${id}`)
+        store.state.commentToOnePost = await commentsData.json()
+    }
 }

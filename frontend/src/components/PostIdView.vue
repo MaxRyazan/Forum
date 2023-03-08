@@ -8,6 +8,16 @@
             <div>{{store.state.onePost.title}}</div>
             <div>{{store.state.onePost.tags}}</div>
             <div>{{store.state.onePost.subject}}</div>
+            <div v-if="store.state.commentToOnePost.length">
+                <div>дата написания коммента: {{store.state.commentToOnePost[0].timestamp}}</div>
+                <div>коммент к посту: {{store.state.commentToOnePost[0].belongTo.id}}</div>
+                <div>коммент к посту: {{store.state.commentToOnePost[0].comment}}</div>
+                <div>коммент создан: {{store.state.commentToOnePost[0].belongTo.created_at}}</div>
+                <div>коммент изменён: {{store.state.commentToOnePost[0].belongTo.updated_at}}</div>
+                <div>автор коммента: {{store.state.commentToOnePost[0].author.firstname}}
+                    {{store.state.commentToOnePost[0].author.lastname}}
+                </div>
+            </div>
         </div>
         <div class="one_post_footer">
             <div class="one_post_like">
@@ -39,15 +49,17 @@ onMounted(async () => {
     const route = useRoute();
     await actions.getOnePost(String(route.params.id))
     await actions.refreshViews(store.state.onePost)
+    await actions.getCommentsToOnePost(store.state.onePost.id)
 })
 
 const likes = computed(() => {
     return store.state.onePost.likes > 0 ? store.state.onePost.likes : ''
 })
 
-async function signLike(postEntity){
-    await actions.signLike(postEntity)
+function signLike(postEntity){
+    actions.signLike(postEntity)
 }
+
 </script>
 
 <style scoped lang="scss">

@@ -14,8 +14,8 @@ export class CommentEntity{
     public comment: string
 
     @ManyToOne(() => PostEntity, postEntity => postEntity.comments)
-    belongTo: PostEntity
+    belongTo: number
 
     @ManyToOne(() => BloggerEntity, bloggerEntity => bloggerEntity.comments)
-    author: BloggerEntity
+    author: number
 }
