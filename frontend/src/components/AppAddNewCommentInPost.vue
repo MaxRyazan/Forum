@@ -11,15 +11,19 @@
 import {ref} from "vue";
 import store from "@/store/store";
 import {CommentEntity} from "@/logic/entities/CommentEntity";
+import {Mutations} from "@/logic/mutations";
+import {Actions} from "@/logic/actions";
 
 let toggleAddCommentForm = ref(false);
 const textareaValue = ref('')
+const mutations = new Mutations()
+const actions = new Actions()
+
 function addComment(){
-    const currentBlogger = JSON.parse(localStorage.getItem('user'))
+    const currentBlogger = mutations.getUserFromLocalStorage()
     const currentPost = store.state.onePost
     const newComment = new CommentEntity(textareaValue.value, currentBlogger.id, currentPost.id)
-    console.log(newComment)
-
+    actions.createNewComment(newComment)
 }
 
 function toggleFormVision(){

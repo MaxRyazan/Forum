@@ -4,6 +4,8 @@ import {Mutations} from "@/logic/mutations";
 import {baseURL} from '@/env'
 // @ts-ignore
 import {PostEntity} from "@/logic/entities/PostEntity";
+// @ts-ignore
+import {CommentEntity} from "@/logic/entities/CommentEntity";
 
 
 export class Actions {
@@ -43,14 +45,13 @@ export class Actions {
     }
 
     async signLike(postEntity: PostEntity){
-        const mutations = new Mutations()
-        const user = mutations.checkUserInLocalStorage()
-        if(postEntity.usersWhoLiked === null || postEntity.usersWhoLiked.indexOf(String(user.id)) === -1) {
+        const user = JSON.parse(String(localStorage.getItem('user')))
+        if(postEntity.usersWhoLiked === null || postEntity.usersWhoLiked.indexOf(user.username) === -1) {
             postEntity.usersWhoLiked = []
-            postEntity.usersWhoLiked.push(String(user.id))
+            postEntity.usersWhoLiked.push(user.username)
             postEntity.likes = postEntity.likes + 1
         } else {
-            if(postEntity.usersWhoLiked !== null && postEntity.usersWhoLiked.indexOf(String(user.id)) !== -1) {
+            if(postEntity.usersWhoLiked !== null && postEntity.usersWhoLiked.indexOf(user.username) !== -1) {
                 postEntity.usersWhoLiked.splice(0, 1)
                 postEntity.likes = postEntity.likes - 1
             }
@@ -67,5 +68,31 @@ export class Actions {
     async getCommentsToOnePost(id: number) {
        const commentsData =  await fetch(baseURL + `/comments/${id}`)
         store.state.commentToOnePost = await commentsData.json()
+    }
+
+    async checkOrCreateUser() {
+        if(localStorage.getItem('user') === null) {
+            const username = 'user' + Date.now()
+            await fetch(baseURL + `/blogger/new`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({username})
+            })
+            const userData = await fetch(baseURL + `/blogger/${username}`)
+            const currentUser = await userData.json()
+            localStorage.setItem('user', JSON.stringify(currentUser))
+        }
+    }
+
+    async createNewComment(newComment: CommentEntity) {
+        await fetch(baseURL + `/comments/new`, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(newComment)
+        })
     }
 }

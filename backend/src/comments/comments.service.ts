@@ -25,4 +25,9 @@ export class CommentsService {
             }
         })
     }
+
+    async createNewComment(comment: CommentEntity) {
+        console.log(comment)
+        return this.commentRepository.save(comment)
+    }
 }

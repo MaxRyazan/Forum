@@ -1,5 +1,4 @@
-import {BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {hash} from 'bcrypt'
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {PostEntity} from "../posts/postEntity";
 import {CommentEntity} from "../comments/CommentEntity";
 
@@ -10,16 +9,7 @@ export class BloggerEntity {
     id: number
 
     @Column({nullable: false})
-    firstname: string
-
-    @Column({nullable: false})
-    lastname: string
-
-    @Column({nullable: false})
-    email: string
-
-    @Column({nullable: false, select: false})
-    password: string
+    username: string
 
     @OneToMany(() => PostEntity, post => post.author, {cascade: true})
     posts: PostEntity[]
@@ -27,8 +17,4 @@ export class BloggerEntity {
     @OneToMany(() => CommentEntity, comment => comment.author)
     comments: CommentEntity[]
 
-    @BeforeInsert()
-    async hashPass(){
-        this.password = await hash(this.password, 10)
-    }
 }

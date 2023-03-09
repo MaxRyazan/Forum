@@ -4,7 +4,7 @@
             <div class="comment_item text">{{comment.comment}}</div>
             <div class="comment_item">
                 <span>Прокомментировал:</span>
-                <span>{{comment.author.firstname}} {{comment.author.lastname}}</span>
+                <span>{{user.username}}</span>
             </div>
             <div class="comment_item">
                 <span>Добавлено:</span>
@@ -22,6 +22,7 @@ defineProps({
     comment: {}
 })
 
+const user = JSON.parse(localStorage.getItem('user'))
 
 </script>
 <style scoped lang="scss">

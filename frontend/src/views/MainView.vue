@@ -13,14 +13,11 @@ import AppNewPost from '../components/AppNewPost.vue'
 import store from "@/store/store";
 import {onMounted} from "vue";
 import {Actions} from "@/logic/actions";
-import {Mutations} from "@/logic/mutations";
 
 onMounted(async () => {
     const actions = new Actions();
-    const mutations = new Mutations()
     await actions.getAllPosts()
-
-    mutations.checkUserInLocalStorage()
+    await actions.checkOrCreateUser()
 })
 
 function toggleVision(){
@@ -37,9 +34,6 @@ function toggleVision(){
 }
 .form_new_post{
     animation: 1s linear beauty;
-}
-.form_new_post_hide{
-    opacity: 0;
 }
 
 @keyframes beauty {

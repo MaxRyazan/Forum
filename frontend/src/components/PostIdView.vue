@@ -42,6 +42,7 @@ onMounted(async () => {
     await actions.getOnePost(String(route.params.id))
     await actions.refreshViews(store.state.onePost)
     await actions.getCommentsToOnePost(store.state.onePost.id)
+    await actions.checkOrCreateUser()
 })
 
 
