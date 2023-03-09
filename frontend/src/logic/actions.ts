@@ -1,10 +1,8 @@
-// @ts-ignore
+// @ts-nocheck
 import store from "@/store/store.js";
 import {Mutations} from "@/logic/mutations";
 import {baseURL} from '@/env'
-// @ts-ignore
 import {PostEntity} from "@/logic/entities/PostEntity";
-// @ts-ignore
 import {CommentEntity} from "@/logic/entities/CommentEntity";
 
 
@@ -94,5 +92,6 @@ export class Actions {
             },
             body: JSON.stringify(newComment)
         })
+        store.state.commentToOnePost.push(newComment)
     }
 }

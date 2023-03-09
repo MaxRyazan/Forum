@@ -24,6 +24,8 @@ function addComment(){
     const currentPost = store.state.onePost
     const newComment = new CommentEntity(textareaValue.value, currentBlogger.id, currentPost.id)
     actions.createNewComment(newComment)
+    textareaValue.value = ''
+    toggleFormVision()
 }
 
 function toggleFormVision(){
