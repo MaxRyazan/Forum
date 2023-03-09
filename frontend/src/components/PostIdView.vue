@@ -1,14 +1,21 @@
 <template>
     <div class="one_post_container">
-        <div class="one_post_nav">
-            <a href="/">Главная</a>
-            <span>/ Пост № {{store.state.onePost.id}}</span>
-        </div>
+        <AppNavigationInPost :post="store.state.onePost"/>
+
         <div class="one_post_wrapper">
             <div>{{store.state.onePost.title}}</div>
             <div>{{store.state.onePost.tags}}</div>
             <div>{{store.state.onePost.subject}}</div>
             <hr />
+            <button @click="toggleFormVision" v-if="!toggleAddCommentForm" class="test">Прокомментировать</button>
+
+            <div class="comment_add" v-if="toggleAddCommentForm">
+                <form @submit.prevent="addComment" class="one_post_add">
+                    <textarea></textarea>
+                    <button type="submit">Подтвердить</button>
+                </form>
+            </div>
+
             <div v-if="store.state.commentToOnePost.length">
                 <div class="comment_title">
                     <h5>Комментарии:</h5>
@@ -18,20 +25,8 @@
                 </div>
             </div>
         </div>
-        <div class="one_post_footer">
-            <div class="one_post_like">
-                <div class="one_post_like_text">
-                    <h4>Понравилась статья?</h4>
-                </div>
-                <div class="one_post_like_img">
-                    <img @click="signLike(store.state.onePost)" class="one_post_like_img_item" src="@/assets/images/like_picture.png" alt="like">
-                    <span>{{likes}}</span>
-                </div>
-            </div>
-            <div class="one_post_views">
-                <h4>Просмотров: {{store.state.onePost.views}}</h4>
-            </div>
-        </div>
+
+        <AppFooterInPost :post="store.state.onePost" @signLike="signLike"/>
     </div>
 
 </template>
@@ -39,12 +34,14 @@
 <script setup>
 import {useRoute} from 'vue-router';
 import {Actions} from "@/logic/actions";
-import {computed, onMounted} from "vue";
+import {onMounted, ref} from "vue";
 import store from "@/store/store";
 import AppCommentData from "@/components/AppCommentData.vue";
+import AppNavigationInPost from "@/components/AppNavigationInPost.vue";
+import AppFooterInPost from "@/components/AppFooterInPost.vue";
 
 const actions = new Actions();
-
+let toggleAddCommentForm = ref(false);
 onMounted(async () => {
     const route = useRoute();
     await actions.getOnePost(String(route.params.id))
@@ -52,19 +49,24 @@ onMounted(async () => {
     await actions.getCommentsToOnePost(store.state.onePost.id)
 })
 
-const likes = computed(() => {
-    return store.state.onePost.likes > 0 ? store.state.onePost.likes : ''
-})
 
 function signLike(postEntity){
     actions.signLike(postEntity)
 }
 
+function addComment(){
+    toggleAddCommentForm.value = false
+
+}
+
+function toggleFormVision(){
+    toggleAddCommentForm.value = !toggleAddCommentForm.value
+}
+
 </script>
 
 <style scoped lang="scss">
-template{
-}
+
 .one_post_container{
   border: 1px solid rgb(21, 145, 153);
   max-width: 1440px;
@@ -89,64 +91,38 @@ template{
   font-size: 18px;
   color: rgb(35, 142, 166);
 }
-.one_post_nav{
-  margin-top: 150px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 20px 20px 0 0;
-  & a{
-    color: rgb(35, 142, 166);
-    text-decoration: none;
-  }
-}
-.one_post_footer{
-  border-radius: 0 0 20px 20px;
-  background-color: white;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  display: flex;
-  justify-content: space-around;
-  & h4 {
-    cursor: default;
-    font-weight: 600;
-  }
-}
 
 .one_post_comment{
   display: flex;
   justify-content: end;
 }
 
-.one_post_like_text {
-  text-align: center;
-}
-
-.one_post_like {
+.one_post_add{
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  animation: 1s linear myAnimation;
+  & button{
+    width: 200px;
+    align-self: center;
+  }
+  & textarea{
+    width: 80%;
+    align-self: center;
+  }
+}
+.test{
+  width: 200px;
+  align-self: center;
+  animation: .5s linear myAnimation;
 }
 
-.one_post_like_img {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  & img {
-    width: 100%;
-    position: absolute;
-    bottom: 5px;
-    cursor: pointer;
-    left: 20px;
-    &:active{
-      transform: scale(1.1);
-    }
+@keyframes myAnimation {
+  0%{
+    opacity: 0;
   }
-  & span{
-    width: 30px;
-    position: absolute;
-    bottom: 5px;
-    right: -60px;
-    text-align: center;
-    cursor: default;
+  100%{
+    opacity: 1;
   }
 }
 </style>
