@@ -7,14 +7,8 @@
             <div>{{store.state.onePost.tags}}</div>
             <div>{{store.state.onePost.subject}}</div>
             <hr />
-            <button @click="toggleFormVision" v-if="!toggleAddCommentForm" class="test">Прокомментировать</button>
 
-            <div class="comment_add" v-if="toggleAddCommentForm">
-                <form @submit.prevent="addComment" class="one_post_add">
-                    <textarea></textarea>
-                    <button type="submit">Подтвердить</button>
-                </form>
-            </div>
+            <AppAddNewCommentInPost/>
 
             <div v-if="store.state.commentToOnePost.length">
                 <div class="comment_title">
@@ -34,14 +28,15 @@
 <script setup>
 import {useRoute} from 'vue-router';
 import {Actions} from "@/logic/actions";
-import {onMounted, ref} from "vue";
+import {onMounted} from "vue";
 import store from "@/store/store";
 import AppCommentData from "@/components/AppCommentData.vue";
 import AppNavigationInPost from "@/components/AppNavigationInPost.vue";
 import AppFooterInPost from "@/components/AppFooterInPost.vue";
+import AppAddNewCommentInPost from "@/components/AppAddNewCommentInPost.vue";
 
 const actions = new Actions();
-let toggleAddCommentForm = ref(false);
+
 onMounted(async () => {
     const route = useRoute();
     await actions.getOnePost(String(route.params.id))
@@ -54,14 +49,6 @@ function signLike(postEntity){
     actions.signLike(postEntity)
 }
 
-function addComment(){
-    toggleAddCommentForm.value = false
-
-}
-
-function toggleFormVision(){
-    toggleAddCommentForm.value = !toggleAddCommentForm.value
-}
 
 </script>
 
@@ -97,32 +84,4 @@ function toggleFormVision(){
   justify-content: end;
 }
 
-.one_post_add{
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  animation: 1s linear myAnimation;
-  & button{
-    width: 200px;
-    align-self: center;
-  }
-  & textarea{
-    width: 80%;
-    align-self: center;
-  }
-}
-.test{
-  width: 200px;
-  align-self: center;
-  animation: .5s linear myAnimation;
-}
-
-@keyframes myAnimation {
-  0%{
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
 </style>
