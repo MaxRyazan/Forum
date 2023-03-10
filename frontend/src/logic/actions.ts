@@ -8,7 +8,8 @@ import {CommentEntity} from "@/logic/entities/CommentEntity";
 
 export class Actions {
     async sendNewPostData(){
-        const newPost = { title: store.state.title, tags: store.state.tags, subject: store.state.subject }
+        const author = JSON.parse(localStorage.getItem('user'))
+        const newPost = { title: store.state.title, tags: store.state.tags, subject: store.state.subject, author }
         await fetch(baseURL + '/posts/new', {
             method: "POST",
             headers: {
