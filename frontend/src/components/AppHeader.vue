@@ -1,5 +1,5 @@
 <template>
-    <div class="header_wrapper">
+    <div class="header_wrapper" v-if="!store.state.isFormVisible">
         <button @click="toggleForm">Создать новый пост</button>
     </div>
 </template>
@@ -10,7 +10,6 @@ import store from "@/store/store";
 defineEmits(['toggleVision'])
 function toggleForm(){
     store.state.isFormVisible = !store.state.isFormVisible
-    console.log(store.state.isFormVisible)
 }
 </script>
 <style scoped>

@@ -1,25 +1,103 @@
 <template>
+    <div v-for="(index) in pagesCount" class="buttons" :key="index">
+        <button @click="changePage(index)">{{index}}</button>
+    </div>
     <div class="all_posts_wrapper">
-        <div class="all_posts_wrapper_item" v-for="post in store.state.allPosts" :key="post.id" @click="$router.push(`/posts/${post.id}`)">
-            <div class="all_posts_wrapper_item_inner">
-                <div class="all_posts_wrapper_item_inner-likes">
-                    <div>
-                        <img class="all_posts_img" src="@/assets/images/like_picture.png" alt="like">
-                        <span>{{post.likes}}</span>
-                    </div>
-                    <div class="all_posts_views">Просмотров: {{post.views}}</div>
+        <div class="all_posts_wrapper_item_inner"
+             v-for="post in filteredArray" :key="post.id"
+             @click="$router.push(`/posts/${post.id}`)"
+        >
+            <div class="all_posts_promo">
+                <div class="all_posts_promo_title">
+                    <div class="all_posts_promo_item title">{{ post.title }}</div>
+                    <div class="all_posts_promo_item">{{ post.tags }}</div>
                 </div>
-                <div class="all_posts_wrapper_item-content">{{post.title}}</div>
-                <div class="all_posts_wrapper_item-content">{{post.tags}}</div>
-                <div class="all_posts_wrapper_item-content">{{post.subject}}</div>
+                <div>
+                    <div class="all_posts_promo_item">
+                        <img src="../assets/images/like_picture.png" alt="">
+                        <span>{{ post.likes }}</span>
+                    </div>
+                    <div class="all_posts_promo_item">
+                        <img src="../assets/images/view_picture.png" alt="">
+                        <span>{{ post.views }}</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import store from "@/store/store";</script>
+import store from "@/store/store";
+import {computed, ref} from "vue";
+
+let buttonIndex = ref(1)
+const pagesCount = computed(() => {
+    return Math.ceil(store.state.allPosts.length / 10)
+})
+
+const filteredArray = computed(() => {
+    if(buttonIndex.value === 1){
+        return store.state.allPosts.filter((post, index) => index >= 0 && index < 10)
+    }
+    return store.state.allPosts.filter((post, index) => index >= buttonIndex.value * 10 - 10 && index < buttonIndex.value * 10)
+ // return store.state.allPosts.filter((post, index) => 11 >= 2 * 10 - 10 && 11 < 2 + 19)
+ // return store.state.allPosts.filter((post, index) => 11 >= 2 * 10 - 10 && 11 < 2 + 19)
+ // return store.state.allPosts.filter((post, index) => 11 >= 11 && 11 < 22)
+})
+
+function changedPage(arg){
+    return store.state.allPosts.filter((post, index) => index > arg && index < arg + 10)
+}
+
+function  changePage(index){
+    buttonIndex.value = index
+}
+
+changedPage()
+
+</script>
 <style scoped lang="scss">
+.buttons{
+  display: inline-flex;
+  & button{
+    padding: 5px 10px;
+    margin-left: 10px;
+  }
+}
+
+
+.all_posts_promo{
+  display: flex;
+  justify-content: space-between;
+}
+.all_posts_promo_item{
+  display: flex;
+  align-items: center;
+  padding: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &.title{
+    max-width: 80%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-right: 10px;
+  }
+ & img{
+   width: 20px;
+   margin-right: 5px;
+ }
+}
+.all_posts_promo_title{
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+}
+
+
+
+
 .all_posts_wrapper {
   margin-top: 50px;
   width: 100%;
@@ -27,31 +105,16 @@ import store from "@/store/store";</script>
   grid-template-columns: repeat(1, minmax(280px, 1fr));
   gap: 20px;
 }
-.all_posts_wrapper_item_inner-likes{
-  position: relative;
-  display: flex;
-  & span {
-    position: absolute;
-    left: 70px;
-    top: 10px;
-  }
-}
-.all_posts_img{
-  left: 20px;
-  position: absolute;
-  width: 30px;
-  height: 30px;
-}
-.all_posts_views{
-  position: absolute;
-  right: 20px;
-}
+
 .all_posts_wrapper_item_inner{
-  background-color: white;
+  background-color: rgba(255, 255, 255, .8);
   padding: 10px;
   border-radius: 20px;
   position: relative;
   overflow: hidden;
+  &:hover{
+    background-color: rgba(255, 255, 255, .65);
+  }
   &::after {
     content: "";
     position: absolute;
@@ -59,27 +122,16 @@ import store from "@/store/store";</script>
     bottom: 0;
     width: 100%;
     height: 20px;
-    background: linear-gradient(180deg, transparent, white 50%);
-  }
-}
-.all_posts_wrapper_item {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  border-radius: 20px;
-  padding: 5px;
-  &:hover {
-    cursor: pointer;
-    background-color: rgb(22, 188, 199);
   }
 }
 
-.all_posts_wrapper_item-content {
-  margin-top: 10px;
-  display: -webkit-box;
-  -webkit-line-clamp: 7;
-  -webkit-box-orient: vertical;
-  line-height: 140%;
 
-}
+//.all_posts_wrapper_item-content {
+//  margin-top: 10px;
+//  display: -webkit-box;
+//  -webkit-line-clamp: 7;
+//  -webkit-box-orient: vertical;
+//  line-height: 140%;
+//
+//}
 </style>

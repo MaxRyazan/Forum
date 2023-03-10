@@ -19,6 +19,7 @@ function addNewPost() {
         const actions = new Actions()
         actions.sendNewPostData()
     }
+    store.state.isFormVisible = !store.state.isFormVisible
 }
 
 function validateFields() {

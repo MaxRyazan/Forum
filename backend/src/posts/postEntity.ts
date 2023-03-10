@@ -8,6 +8,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
+
 import {CommentEntity} from "../comments/CommentEntity";
 
 @Entity({name: 'posts'})

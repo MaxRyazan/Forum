@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post} from '@nestjs/common';
+import {Body, Controller, Get, Param, Patch, Post} from '@nestjs/common';
 import {PostsService} from "./posts.service";
 import {PostEntity} from "./postEntity";
 
@@ -9,14 +9,8 @@ export class PostsController {
 
     @Post('/new')
     async createNewPost(@Body() postEntity: PostEntity): Promise<PostEntity>{
-        try{
-            const {title} = postEntity
-            if(!await this.postsService.findByTitle(title)){
-                return await this.postsService.createNewPost(postEntity)
-            }
-        } catch (e) {
-            throw new HttpException('Пост с таким названием уже существует!', HttpStatus.BAD_REQUEST)
-        }
+        postEntity.usersWhoLiked = []
+        return await this.postsService.createNewPost(postEntity)
     }
 
     @Get('/:id')

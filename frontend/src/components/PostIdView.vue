@@ -56,7 +56,7 @@ function signLike(postEntity){
 <style scoped lang="scss">
 
 .one_post_container{
-  border: 1px solid rgb(21, 145, 153);
+  border: 1px solid rgba(21, 145, 153, 0);
   max-width: 1440px;
   margin: 0 auto;
   height: 100%;
@@ -69,7 +69,7 @@ function signLike(postEntity){
   text-align: center;
   gap: 50px;
   padding: 20px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.85);
 }
 .comment_title{
   display: inline-block;
