@@ -10,7 +10,6 @@ export class PostsController {
     @Post('/new')
     async createNewPost(@Body() postEntity: PostEntity): Promise<PostEntity>{
         postEntity.usersWhoLiked = []
-        console.log(postEntity)
         return await this.postsService.createNewPost(postEntity)
     }
 

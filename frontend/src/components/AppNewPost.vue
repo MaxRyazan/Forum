@@ -4,13 +4,14 @@
         <input v-model="state.title" type="text" class="new_post_input_title" placeholder="Придумайте название для поста" autofocus>
         <input v-model="state.tags" type="text" class="new_post_input_tags" placeholder="Укажите теги для поиска">
         <textarea v-model="state.subject" class="new_post_input_subject" placeholder="Напишите содержание поста"></textarea>
-        <button @click.prevent="addNewPost">Добавить</button>
+        <small-button :title="`Добавить`" :primary="true" @click="addNewPost" />
     </div>
 </template>
 
 <script setup>
 import store from "@/store/store";
 import {Actions} from "@/logic/actions";
+import SmallButton from '@/components/small/SmallButton.vue'
 
 const state = store.state
 

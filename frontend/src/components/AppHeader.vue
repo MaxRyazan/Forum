@@ -1,11 +1,12 @@
 <template>
     <div class="header_wrapper" v-if="!store.state.isFormVisible">
-        <button @click="toggleForm">Создать новый пост</button>
+        <small-button :title="`Создать новый пост`" :primary="true" @click="toggleForm"/>
     </div>
 </template>
 
 <script setup>
 import store from "@/store/store";
+import SmallButton from '@/components/small/SmallButton.vue'
 
 defineEmits(['toggleVision'])
 function toggleForm(){

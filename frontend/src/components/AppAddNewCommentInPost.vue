@@ -1,9 +1,9 @@
 <template>
-    <button @click="toggleFormVision" v-if="!toggleAddCommentForm" class="test">Прокомментировать</button>
+    <small-button :title="`Прокомментировать`" :primary="true" @click="toggleFormVision" v-if="!toggleAddCommentForm"/>
     <div class="comment_add" v-if="toggleAddCommentForm">
         <form @submit.prevent="addComment" class="one_post_add">
             <textarea v-model="textareaValue"></textarea>
-            <button type="submit">Подтвердить</button>
+            <small-button :title="`Подтвердить`" :submit="true"/>
         </form>
     </div>
 </template>
@@ -13,6 +13,7 @@ import store from "@/store/store";
 import {CommentEntity} from "@/logic/entities/CommentEntity";
 import {Mutations} from "@/logic/mutations";
 import {Actions} from "@/logic/actions";
+import SmallButton from '@/components/small/SmallButton.vue'
 
 let toggleAddCommentForm = ref(false);
 const textareaValue = ref('')

@@ -1,12 +1,9 @@
 <template>
     <div v-for="(index) in pagesCount" class="buttons" :key="index">
-        <button @click="changePage(index)">{{index}}</button>
+        <small-button :title="String(index)" :small="true" :primary="false"  @click="changePage(index)"/>
     </div>
     <div class="all_posts_wrapper">
-        <div class="all_posts_wrapper_item_inner"
-             v-for="post in filteredArray" :key="post.id"
-             @click="$router.push(`/posts/${post.id}`)"
-        >
+        <div class="all_posts_wrapper_item_inner" v-for="post in filteredArray" :key="post.id" @click="$router.push(`/posts/${post.id}`)">
             <div class="all_posts_promo">
                 <div class="all_posts_promo_title">
                     <div class="all_posts_promo_item title">{{ post.title }}</div>
@@ -30,8 +27,10 @@
 <script setup>
 import store from "@/store/store";
 import {computed, ref} from "vue";
+import SmallButton from '@/components/small/SmallButton.vue';
 
-let buttonIndex = ref(1)
+let buttonIndex = ref(1);
+
 const pagesCount = computed(() => {
     return Math.ceil(store.state.allPosts.length / 10)
 })
@@ -41,20 +40,12 @@ const filteredArray = computed(() => {
         return store.state.allPosts.filter((post, index) => index >= 0 && index < 10)
     }
     return store.state.allPosts.filter((post, index) => index >= buttonIndex.value * 10 - 10 && index < buttonIndex.value * 10)
- // return store.state.allPosts.filter((post, index) => 11 >= 2 * 10 - 10 && 11 < 2 + 19)
- // return store.state.allPosts.filter((post, index) => 11 >= 2 * 10 - 10 && 11 < 2 + 19)
- // return store.state.allPosts.filter((post, index) => 11 >= 11 && 11 < 22)
 })
-
-function changedPage(arg){
-    return store.state.allPosts.filter((post, index) => index > arg && index < arg + 10)
-}
 
 function  changePage(index){
     buttonIndex.value = index
 }
 
-changedPage()
 
 </script>
 <style scoped lang="scss">
