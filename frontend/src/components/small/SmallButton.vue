@@ -1,14 +1,13 @@
 <template>
-    <div>
         <button
                 class="btn"
                 :class="{'btn__small' : small, 'btn__primary' : primary}"
                 :type="{submit : submit}"
         >{{title}}</button>
-    </div>
 </template>
 
 <script setup>
+
 defineProps({
     title: {
         type: String,
@@ -29,6 +28,7 @@ defineProps({
         default: false
     }
 })
+
 </script>
 
 <style scoped lang="scss">
